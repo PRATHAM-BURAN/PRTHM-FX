@@ -22,3 +22,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Scratch & Raw folders
+scratch/
+public/assets/show content/
