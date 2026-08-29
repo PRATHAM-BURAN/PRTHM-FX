@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>PRTHM - Video Editor</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Anton&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-background": "#ffdad4",
+                    "on-primary": "#690000",
+                    "on-primary-fixed-variant": "#930100",
+                    "on-tertiary-container": "#f8f7ff",
+                    "on-surface-variant": "#e9bcb5",
+                    "outline": "#b08781",
+                    "on-secondary-container": "#ff9f90",
+                    "primary-fixed-dim": "#ffb4a8",
+                    "surface-container": "#2f1a17",
+                    "surface-variant": "#462f2b",
+                    "surface-container-lowest": "#1b0907",
+                    "tertiary-container": "#0068f9",
+                    "on-surface": "#ffdad4",
+                    "tertiary-fixed-dim": "#b2c5ff",
+                    "primary-container": "#e60000",
+                    "background": "#050505", // Adjusted for style guidance
+                    "surface-tint": "#ffb4a8",
+                    "surface-dim": "#210e0c",
+                    "on-secondary": "#690000",
+                    "on-secondary-fixed-variant": "#930000",
+                    "secondary-fixed": "#ffdad4",
+                    "on-secondary-fixed": "#410000",
+                    "secondary-container": "#980000",
+                    "on-primary-container": "#fff7f5",
+                    "surface": "#121212", // Adjusted for style guidance
+                    "secondary-fixed-dim": "#ffb4a8",
+                    "on-tertiary-fixed": "#001847",
+                    "error": "#ffb4ab",
+                    "surface-container-highest": "#462f2b",
+                    "primary-fixed": "#ffdad4",
+                    "on-error": "#690005",
+                    "surface-container-low": "#2a1613",
+                    "on-primary-fixed": "#410000",
+                    "tertiary": "#b2c5ff",
+                    "on-error-container": "#ffdad6",
+                    "surface-container-high": "#3a2421",
+                    "surface-bright": "#4b3330",
+                    "on-tertiary": "#002c72",
+                    "on-tertiary-fixed-variant": "#0040a0",
+                    "error-container": "#93000a",
+                    "primary": "#E60000", // Adjusted for style guidance
+                    "inverse-surface": "#ffdad4",
+                    "inverse-on-surface": "#412b27",
+                    "outline-variant": "#5f3f3a",
+                    "secondary": "#ffb4a8",
+                    "tertiary-fixed": "#dae2ff",
+                    "inverse-primary": "#c00000"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "container-max": "1440px",
+                    "unit": "8px",
+                    "margin-desktop": "80px",
+                    "margin-mobile": "24px",
+                    "gutter": "24px"
+            },
+            "fontFamily": {
+                    "label-mono": [
+                            "JetBrains Mono"
+                    ],
+                    "headline-lg": [
+                            "Anton"
+                    ],
+                    "headline-lg-mobile": [
+                            "Anton"
+                    ],
+                    "display-xl": [
+                            "Anton"
+                    ],
+                    "body-lg": [
+                            "Inter"
+                    ],
+                    "headline-md": [
+                            "Anton"
+                    ],
+                    "body-md": [
+                            "Inter"
+                    ]
+            },
+            "fontSize": {
+                    "label-mono": [
+                            "12px",
+                            {
+                                    "lineHeight": "16px",
+                                    "letterSpacing": "0.1em",
+                                    "fontWeight": "500"
+                            }
+                    ],
+                    "headline-lg": [
+                            "64px",
+                            {
+                                    "lineHeight": "72px",
+                                    "letterSpacing": "0.02em",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "headline-lg-mobile": [
+                            "48px",
+                            {
+                                    "lineHeight": "52px",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "display-xl": [
+                            "120px",
+                            {
+                                    "lineHeight": "110px",
+                                    "letterSpacing": "-0.02em",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "body-lg": [
+                            "18px",
+                            {
+                                    "lineHeight": "28px",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "headline-md": [
+                            "32px",
+                            {
+                                    "lineHeight": "40px",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "body-md": [
+                            "16px",
+                            {
+                                    "lineHeight": "24px",
+                                    "fontWeight": "400"
+                            }
+                    ]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: theme('colors.background');
+            color: theme('colors.on-background');
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+        
+        /* Noise overlay */
+        .noise-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        /* Cinematic Rim Lighting */
+        .rim-light {
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Red Glow */
+        .hover-red-glow:hover {
+            box-shadow: 0 0 20px rgba(230, 0, 0, 0.3);
+            border-color: theme('colors.primary');
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #121212;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: theme('colors.primary');
+        }
+
+        /* Smooth reveal animation */
+        .reveal-on-scroll {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal-on-scroll.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* 3D Perspective Container */
+        .perspective-container {
+            perspective: 1000px;
+        }
+
+        .scroll-portrait {
+            transition: transform 0.1s ease-out, opacity 0.1s ease-out;
+            will-change: transform, opacity;
+        }
+    </style>
+</head>
+<body class="antialiased font-body-md text-body-md selection:bg-primary selection:text-white relative">
+<!-- Fixed WebGL Background -->
+<div class="fixed inset-0 z-0 pointer-events-none opacity-50 mix-blend-screen">
+<!-- STITCH_SHADER_START:ANIMATION_4 class="w-full h-full" -->
+<div class="w-full h-full" style="display:block;">
+<canvas id="shader-canvas-ANIMATION_4" style="display:block;width:100%;height:100%"></canvas>
+<script>
+(function() {
+  const canvas = document.getElementById('shader-canvas-ANIMATION_4');
+
+  // Sync the WebGL drawing-buffer size with the CSS-driven layout size.
+  // This fires on initial layout and whenever the element is resized.
+  function syncSize() {
+    const w = canvas.clientWidth  || 1280;
+    const h = canvas.clientHeight || 720;
+    if (canvas.width !== w || canvas.height !== h) {
+      canvas.width  = w;
+      canvas.height = h;
+    }
+  }
+  if (typeof ResizeObserver !== 'undefined') {
+    new ResizeObserver(syncSize).observe(canvas);
+  }
+  syncSize();
+
+  const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+  if (!gl) return;
+  const vs = `attribute vec2 a_position;
+varying vec2 v_texCoord;
+void main() {
+  v_texCoord = a_position * 0.5 + 0.5;
+  gl_Position = vec4(a_position, 0.0, 1.0);
+}`;
+  const fs = `precision highp float;
+varying vec2 v_texCoord;
+uniform float u_time;
+uniform vec2 u_resolution;
+uniform vec2 u_mouse;
+
+float noise(vec2 p) {
+    return fract(sin(dot(p, vec2(12.9898, 78.233))) * 43758.5453);
+}
+
+void main() {
+    vec2 uv = v_texCoord;
+    vec2 centered_uv = (uv - 0.5) * vec2(u_resolution.x / u_resolution.y, 1.0);
+    
+    // Deep black background
+    vec3 color = vec3(0.02, 0.01, 0.01);
+    
+    // Subtle red glow/nebula effect
+    float dist = length(centered_uv);
+    float glow = smoothstep(1.2, 0.2, dist);
+    color += vec3(0.1, 0.0, 0.0) * glow;
+    
+    // Floating red light streaks/particles
+    for(int i = 0; i < 8; i++) {
+        float t = u_time * (0.1 + float(i) * 0.05);
+        vec2 p = vec2(
+            sin(t + float(i) * 1.5) * 0.8,
+            cos(t * 0.8 + float(i) * 2.0) * 0.5
+        );
+        float streak = 0.002 / length(centered_uv - p);
+        color += vec3(0.8, 0.0, 0.1) * streak * (0.5 + 0.5 * sin(u_time + float(i)));
+    }
+    
+    // Film grain / Noise
+    float grain = noise(uv * u_time) * 0.05;
+    color += vec3(grain);
+    
+    // Vignette
+    float vignette = smoothstep(1.5, 0.5, length(uv - 0.5));
+    color *= vignette;
+    
+    gl_FragColor = vec4(color, 1.0);
+}`;
+  function cs(type, src) {
+    const s = gl.createShader(type);
+    gl.shaderSource(s, src);
+    gl.compileShader(s);
+    return s;
+  }
+  const prog = gl.createProgram();
+  gl.attachShader(prog, cs(gl.VERTEX_SHADER, vs));
+  gl.attachShader(prog, cs(gl.FRAGMENT_SHADER, fs));
+  gl.linkProgram(prog);
+  gl.useProgram(prog);
+  const buf = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 1,-1, -1,1, 1,1]), gl.STATIC_DRAW);
+  const pos = gl.getAttribLocation(prog, 'a_position');
+  gl.enableVertexAttribArray(pos);
+  gl.vertexAttribPointer(pos, 2, gl.FLOAT, false, 0, 0);
+  const uTime = gl.getUniformLocation(prog, 'u_time');
+  const uRes = gl.getUniformLocation(prog, 'u_resolution');
+  const uMouse = gl.getUniformLocation(prog, 'u_mouse');
+
+  // u_mouse is in pixel coordinates matching u_resolution (ShaderToy convention).
+  // Shaders that need normalized coords should use: u_mouse / u_resolution.
+  let mouse = { x: canvas.width / 2, y: canvas.height / 2 };
+  window.addEventListener('mousemove', (event) => {
+    const rect = canvas.getBoundingClientRect();
+    if (rect.width && rect.height) {
+      const nx = (event.clientX - rect.left) / rect.width;
+      const ny = 1.0 - (event.clientY - rect.top) / rect.height;
+      mouse.x = nx * canvas.width;
+      mouse.y = ny * canvas.height;
+    }
+  });
+
+  function render(t) {
+    if (typeof ResizeObserver === 'undefined') syncSize();
+    gl.viewport(0, 0, canvas.width, canvas.height);
+    if (uTime) gl.uniform1f(uTime, t * 0.001);
+    if (uRes) gl.uniform2f(uRes, canvas.width, canvas.height);
+    if (uMouse) gl.uniform2f(uMouse, mouse.x, mouse.y);
+    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+    requestAnimationFrame(render);
+  }
+  render(0);
+})();
+</script>
+</div>
+<!-- STITCH_SHADER_END:ANIMATION_4 -->
+</div>
+<!-- Noise Texture -->
+<div class="noise-overlay"></div>
+<!-- TopNavBar -->
+<nav class="fixed top-6 left-1/2 -translate-x-1/2 w-[90%] max-w-5xl rounded-full border border-on-surface-variant/10 bg-surface/70 backdrop-blur-[40px] backdrop-blur-3xl shadow-[0_0_20px_rgba(230,0,0,0.1)] flex justify-between items-center px-8 py-3 z-[100]">
+<div class="font-headline-md text-headline-md text-primary tracking-tighter">PRTHM</div>
+<div class="hidden md:flex gap-8 items-center">
+<a class="font-label-mono text-label-mono uppercase tracking-widest text-primary font-bold border-b border-primary/50 pb-1" href="#home">Home</a>
+<a class="font-label-mono text-label-mono uppercase tracking-widest text-on-surface/60 hover:text-on-surface transition-colors duration-300 hover:bg-on-surface-variant/10 hover:scale-105 transition-all" href="#work">Work</a>
+<a class="font-label-mono text-label-mono uppercase tracking-widest text-on-surface/60 hover:text-on-surface transition-colors duration-300 hover:bg-on-surface-variant/10 hover:scale-105 transition-all" href="#categories">Categories</a>
+<a class="font-label-mono text-label-mono uppercase tracking-widest text-on-surface/60 hover:text-on-surface transition-colors duration-300 hover:bg-on-surface-variant/10 hover:scale-105 transition-all" href="#about">About</a>
+<a class="font-label-mono text-label-mono uppercase tracking-widest text-on-surface/60 hover:text-on-surface transition-colors duration-300 hover:bg-on-surface-variant/10 hover:scale-105 transition-all" href="#contact">Contact</a>
+</div>
+<button class="hidden md:block bg-primary text-white font-headline-md text-body-md uppercase tracking-wide px-6 py-2 rounded scale-95 active:scale-90 transition-transform hover:shadow-[0_0_20px_rgba(230,0,0,0.3)]">
+            Hire Me
+        </button>
+<button class="md:hidden text-primary">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</nav>
+<main class="relative z-10 w-full max-w-container-max mx-auto">
+<!-- HERO SECTION -->
+<section class="relative min-h-screen flex items-center pt-32 pb-20 px-margin-mobile md:px-margin-desktop overflow-hidden" id="home">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter w-full h-full relative z-10 items-center">
+<!-- Text Content -->
+<div class="md:col-span-7 flex flex-col justify-center gap-8 relative z-20">
+<h1 class="font-display-xl text-display-xl text-white tracking-tighter leading-none mix-blend-difference drop-shadow-2xl">
+                        HELLO,<br/>I'M PRTHM
+                    </h1>
+<div class="flex flex-col gap-4 max-w-lg">
+<p class="font-label-mono text-label-mono text-primary tracking-widest uppercase">
+                            VIDEO EDITOR • VISUAL STORYTELLER • CREATIVE
+                        </p>
+<p class="font-body-lg text-body-lg text-on-surface/80">
+                            Creating cinematic stories, reels, and visual journeys that captivate and inspire.
+                        </p>
+</div>
+<!-- Social Links -->
+<div class="flex gap-6 mt-8">
+<a class="text-on-surface/50 hover:text-primary transition-colors hover-red-glow p-2 rounded-full rim-light bg-surface/50 backdrop-blur-md" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">photo_camera</span>
+</a>
+<a class="text-on-surface/50 hover:text-primary transition-colors hover-red-glow p-2 rounded-full rim-light bg-surface/50 backdrop-blur-md" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">play_circle</span>
+</a>
+<a class="text-on-surface/50 hover:text-primary transition-colors hover-red-glow p-2 rounded-full rim-light bg-surface/50 backdrop-blur-md" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">work</span>
+</a>
+</div>
+</div>
+<!-- Floating Portrait -->
+<div class="md:col-span-5 h-[60vh] md:h-[80vh] relative perspective-container mt-12 md:mt-0">
+<div class="w-full h-full relative scroll-portrait transform-gpu" id="hero-portrait">
+<!-- Atmospheric red glow behind portrait -->
+<div class="absolute inset-0 bg-primary/20 blur-[100px] rounded-full scale-75 -z-10"></div>
+<img alt="Prthm Portrait" class="w-full h-full object-cover rounded-xl rim-light shadow-2xl object-center filter contrast-125 brightness-90" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD2WvVbG-qKu1jn7VuYRr4rkbY-iyK5JfBOc-oZBwgMX2lGEzavhVYQUYgpHv8dy90AmmxgwADvL-Z6WEEmd_Z-1CY5ypPFXFWeOlIT40Zma_CQNIHgsQM40e9xaTaGZLiC_Il7TiF2AAT7RA8pSq_5cEWC6r5cwza-Vw1Z5FGOKIt2KAGF1Ce90IprmPhsZMOXd1gDe0y0WexYEw297QuIvVXV-WpOI5kwo8x8SuYnAei4MsirM5icwZYq0uUY2OwoBg"/>
+</div>
+</div>
+</div>
+<!-- Scroll indicator -->
+<div class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-on-surface/40 animate-bounce">
+<span class="font-label-mono text-[10px] uppercase tracking-widest">Scroll</span>
+<span class="material-symbols-outlined text-sm">arrow_downward</span>
+</div>
+</section>
+<!-- Spacer -->
+<div class="h-[160px] md:h-[240px] w-full"></div>
+</main>
+<!-- Footer -->
+<footer class="bg-background w-full py-20 border-t border-on-surface-variant/10 flex flex-col items-center gap-12 px-margin-desktop bg-gradient-to-t from-surface-container-lowest to-background relative z-10">
+<h2 class="font-headline-lg text-headline-lg text-primary text-center max-w-4xl tracking-tight reveal-on-scroll">
+            LET'S CREATE SOMETHING WORTH WATCHING.
+        </h2>
+<div class="flex gap-8 font-label-mono text-label-mono reveal-on-scroll">
+<a class="text-on-surface-variant hover:text-primary transition-colors duration-500 uppercase tracking-widest" href="#">Instagram</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors duration-500 uppercase tracking-widest" href="#">Vimeo</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors duration-500 uppercase tracking-widest" href="#">LinkedIn</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors duration-500 uppercase tracking-widest" href="#">Email</a>
+</div>
+<div class="font-headline-lg text-headline-lg text-on-surface-variant/5 text-center mt-12 pointer-events-none select-none">
+            PRTHM
+        </div>
+<div class="font-label-mono text-label-mono text-on-surface-variant/50 text-center uppercase">
+            © 2024 PRTHM DIRECTORS CUT. ALL RIGHTS RESERVED.
+        </div>
+</footer>
+<script>
+        // Scroll interaction for Hero Portrait
+        document.addEventListener('scroll', () => {
+            const scrollY = window.scrollY;
+            const portrait = document.getElementById('hero-portrait');
+            
+            if (portrait) {
+                // Calculate transform values based on scroll
+                // Scale down, move down and back, fade out
+                const scale = Math.max(0.7, 1 - scrollY * 0.0005);
+                const translateY = scrollY * 0.2;
+                const translateZ = -scrollY * 0.5;
+                const opacity = Math.max(0, 1 - scrollY * 0.0015);
+                
+                portrait.style.transform = `scale(${scale}) translateY(${translateY}px) translateZ(${translateZ}px) rotateX(${scrollY * 0.02}deg)`;
+                portrait.style.opacity = opacity;
+            }
+        });
+
+        // Intersection Observer for revealing elements on scroll
+        const revealElements = document.querySelectorAll('.reveal-on-scroll');
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: "0px 0px -50px 0px"
+        });
+
+        revealElements.forEach(el => revealObserver.observe(el));
+    </script>
+</body></html>
