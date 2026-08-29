@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://prthm-fx.vercel.app/sitemap.xml
