@@ -2,7 +2,15 @@
 <html lang="en" class="dark scroll-smooth">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23E60000'%3E%3Cpath d='M4 2v20l17-10L4 2z'/%3E%3C/svg%3E" />
+    <!-- Favicons & Search Engine Icons -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#050505" />
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="google-site-verification" content="2WGaHapaThFs9RT9NycPkf_lu7QaqmrJZW0Oa9V6l2E" />
     
@@ -18,7 +26,7 @@
     <!-- Open Graph / Facebook / WhatsApp / LinkedIn -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://prthm-fx.vercel.app/" />
-    <meta property="og:site_name" content="PRTHM FX Portfolio" />
+    <meta property="og:site_name" content="PRTHM FX" />
     <meta property="og:title" content="PRTHM FX | Pratham Buran — Cinematic Video Editor & Visual Storyteller" />
     <meta property="og:description" content="High-impact video editing portfolio featuring 3D VFX, cinematic reels, narrative films, and brand visuals by Pratham Buran." />
     <meta property="og:image" content="https://prthm-fx.vercel.app/assets/sequence/ezgif-frame-001.png" />
@@ -30,29 +38,45 @@
     <meta property="twitter:description" content="High-impact video editing portfolio featuring 3D VFX, cinematic reels, narrative films, and brand visuals by Pratham Buran." />
     <meta property="twitter:image" content="https://prthm-fx.vercel.app/assets/sequence/ezgif-frame-001.png" />
 
-    <!-- Structured Data (JSON-LD) for Google Rich Snippets -->
+    <!-- Structured Data (JSON-LD) for Google Site Name & Rich Snippets -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "Person",
-      "name": "Pratham Buran",
-      "alternateName": ["PRTHM", "PRTHM FX", "editor_prthm"],
-      "url": "https://prthm-fx.vercel.app/",
-      "jobTitle": "Video Editor & Visual Storyteller",
-      "description": "Professional video editor specializing in high-retention cinematic edits, 3D visual effects, color grading, and commercial campaigns.",
-      "sameAs": [
-        "https://www.instagram.com/editor_prthm",
-        "https://youtube.com/playlist?list=PLEWW45ZeUmDw&si=MMPcvk_QbQdxDJJM",
-        "https://github.com/PRATHAM-BURAN"
-      ],
-      "knowsAbout": [
-        "Video Editing",
-        "Cinematic Color Grading",
-        "3D VFX",
-        "Adobe Premiere Pro",
-        "After Effects",
-        "DaVinci Resolve",
-        "Sound Design"
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "@id": "https://prthm-fx.vercel.app/#website",
+          "name": "PRTHM FX",
+          "alternateName": ["PRTHM", "Pratham Buran", "editor_prthm", "PRTHM FX Portfolio"],
+          "url": "https://prthm-fx.vercel.app/",
+          "publisher": {
+            "@id": "https://prthm-fx.vercel.app/#person"
+          }
+        },
+        {
+          "@type": "Person",
+          "@id": "https://prthm-fx.vercel.app/#person",
+          "name": "Pratham Buran",
+          "alternateName": ["PRTHM", "PRTHM FX", "editor_prthm"],
+          "url": "https://prthm-fx.vercel.app/",
+          "jobTitle": "Video Editor & Visual Storyteller",
+          "image": "https://prthm-fx.vercel.app/assets/prthm_portrait.png",
+          "description": "Professional video editor specializing in high-retention cinematic edits, 3D visual effects, color grading, and commercial campaigns.",
+          "sameAs": [
+            "https://www.instagram.com/editor_prthm",
+            "https://youtube.com/playlist?list=PLEWW45ZeUmDw&si=MMPcvk_QbQdxDJJM",
+            "https://github.com/PRATHAM-BURAN"
+          ],
+          "knowsAbout": [
+            "Video Editing",
+            "Cinematic Color Grading",
+            "3D VFX",
+            "Adobe Premiere Pro",
+            "After Effects",
+            "DaVinci Resolve",
+            "Sound Design"
+          ]
+        }
       ]
     }
     </script>

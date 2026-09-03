@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <radialGradient id="bgGrad" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#140505"/>
+      <stop offset="100%" stop-color="#070708"/>
+    </radialGradient>
+    <radialGradient id="circleGrad" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#3d0000"/>
+      <stop offset="100%" stop-color="#1a0202"/>
+    </radialGradient>
+    <linearGradient id="redGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF1A1A"/>
+      <stop offset="100%" stop-color="#C70000"/>
+    </linearGradient>
+  </defs>
+  <!-- Background Squircle -->
+  <rect width="512" height="512" rx="112" fill="url(#bgGrad)"/>
+  <rect width="512" height="512" rx="112" fill="none" stroke="#E60000" stroke-opacity="0.6" stroke-width="14"/>
+  <!-- Inner Ring -->
+  <circle cx="256" cy="256" r="184" fill="url(#circleGrad)" stroke="#E60000" stroke-opacity="0.8" stroke-width="12"/>
+  <!-- Cinematic Play Glyph -->
+  <polygon points="200,154 364,256 200,358" fill="url(#redGrad)"/>
+</svg>
